@@ -1,9 +1,38 @@
 <odoo>
     <template id="report_invoice_afip_template">
         <t t-call="web.html_container">
-        <style t-out="res_company.website_assets_grid_ma_styles"/> <link rel="stylesheet" href="/exe_new_report_invoice/static/src/css/report_style.css"/>
+            <style>
+                .page {
+                    font-family: Arial, sans-serif !important;
+                    color: #000 !important;
+                    margin-top: 20px;
+                }
+                .afip-letter-box {
+                    border: 2px solid #000;
+                    border-top: none;
+                    background-color: #fff;
+                    min-height: 80px;
+                }
+                .afip-letter-box h1 {
+                    font-size: 45px;
+                    font-weight: bold;
+                    margin: 0;
+                    line-height: 1;
+                }
+                .table-afip {
+                    border: 1px solid #000 !important;
+                    border-collapse: collapse !important;
+                }
+                .table-afip thead th {
+                    background-color: #e0e0e0 !important;
+                    border: 1px solid #000 !important;
+                    text-transform: uppercase;
+                    font-size: 11px;
+                }
+            </style>
+
             <t t-foreach="docs" t-as="o">
-                <t t-call="web.external_layout">
+                <t t-call="web.basic_layout">
                     <div class="page" style="border: 1px solid black; padding: 10px; font-size: 12px;">
                         
                         <div class="row">
@@ -12,9 +41,9 @@
                                 <p t-field="o.company_id.partner_id.contact_address"/>
                             </div>
                             
-                            <div class="col-2 text-center" style="border: 1px solid black; height: 80px;">
-                                <h1 style="margin-bottom: 0;">A</h1>
-                                <span>COD. 01</span>
+                            <div class="col-2 text-center afip-letter-box">
+                                <h1>A</h1>
+                                <span style="font-size: 10px; font-weight: bold;">COD. 01</span>
                             </div>
 
                             <div class="col-5 text-left" style="padding-left: 20px;">
@@ -39,8 +68,8 @@
                             </div>
                         </div>
 
-                        <table class="table table-sm mt-4" style="border: 1px solid black;">
-                            <thead style="background-color: #ddd;">
+                        <table class="table table-sm table-afip mt-4">
+                            <thead>
                                 <tr>
                                     <th>Código</th>
                                     <th>Producto / Servicio</th>
@@ -55,14 +84,13 @@
                                     <td><span t-field="line.name"/></td>
                                     <td class="text-right"><span t-field="line.quantity"/></td>
                                     <td class="text-right"><span t-field="line.price_unit"/></td>
-                                    <td class="text-right"><span t-field="line.price_subtotal"/></td>
+                                    <td class="text-right"><span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                 </tr>
                             </tbody>
                         </table>
 
                         <div class="row mt-4">
-                            <div class="col-7">
-                                </div>
+                            <div class="col-7"></div>
                             <div class="col-5" style="border: 1px solid black; padding: 10px;">
                                 <div class="row">
                                     <div class="col-8 text-right"><strong>Importe Neto Gravado: $</strong></div>
@@ -76,16 +104,6 @@
                                     <div class="col-8 text-right"><strong>Importe Total: $</strong></div>
                                     <div class="col-4 text-right"><span t-field="o.amount_total"/></div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-5">
-                            <div class="col-6">
-                                <img t-if="o.l10n_ar_afip_barcode" t-att-src="'/report/barcode/?type=Code128&amp;value=%s&amp;width=600&amp;height=100' % o.l10n_ar_afip_barcode" style="width:100%;height:50px;"/>
-                            </div>
-                            <div class="col-6 text-right">
-                                <strong>CAE N°:</strong> <span t-field="o.l10n_ar_afip_auth_code"/><br/>
-                                <strong>Fecha Vto CAE:</strong> <span t-field="o.l10n_ar_afip_auth_code_expiry"/>
                             </div>
                         </div>
                     </div>

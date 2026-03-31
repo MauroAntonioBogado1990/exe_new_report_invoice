@@ -1,6 +1,6 @@
 <odoo>
     <record id="action_report_custom_invoice" model="ir.actions.report">
-        <field name="name">Factura AFIP Personalizada</field>
+        <field name="name">Factura ARCA Personalizada</field>
         <field name="model">account.move</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">exe_new_report_invoice.report_invoice_afip_template</field>
