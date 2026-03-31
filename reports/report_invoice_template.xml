@@ -1,0 +1,96 @@
+<odoo>
+    <template id="report_invoice_afip_template">
+        <t t-call="web.html_container">
+        <style t-out="res_company.website_assets_grid_ma_styles"/> <link rel="stylesheet" href="/exe_new_report_invoice/static/src/css/report_style.css"/>
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="border: 1px solid black; padding: 10px; font-size: 12px;">
+                        
+                        <div class="row">
+                            <div class="col-5 text-center">
+                                <h2 t-field="o.company_id.name" style="font-weight: bold;"/>
+                                <p t-field="o.company_id.partner_id.contact_address"/>
+                            </div>
+                            
+                            <div class="col-2 text-center" style="border: 1px solid black; height: 80px;">
+                                <h1 style="margin-bottom: 0;">A</h1>
+                                <span>COD. 01</span>
+                            </div>
+
+                            <div class="col-5 text-left" style="padding-left: 20px;">
+                                <h2 style="font-weight: bold;">FACTURA</h2>
+                                <div><strong>Punto de Venta:</strong> <span t-field="o.journal_id.code"/></div>
+                                <div><strong>Comp. Nro:</strong> <span t-field="o.name"/></div>
+                                <div><strong>Fecha Emisión:</strong> <span t-field="o.invoice_date"/></div>
+                                <div><strong>CUIT:</strong> <span t-field="o.company_id.vat"/></div>
+                            </div>
+                        </div>
+
+                        <hr style="border-top: 1px solid black;"/>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>CUIT:</strong> <span t-field="o.partner_id.vat"/><br/>
+                                <strong>Condición frente al IVA:</strong> <span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id.name"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Apellido y Nombre:</strong> <span t-field="o.partner_id.name"/><br/>
+                                <strong>Domicilio:</strong> <span t-field="o.partner_id.street"/>
+                            </div>
+                        </div>
+
+                        <table class="table table-sm mt-4" style="border: 1px solid black;">
+                            <thead style="background-color: #ddd;">
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Producto / Servicio</th>
+                                    <th class="text-right">Cantidad</th>
+                                    <th class="text-right">Precio Unit.</th>
+                                    <th class="text-right">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                    <td><span t-field="line.product_id.default_code"/></td>
+                                    <td><span t-field="line.name"/></td>
+                                    <td class="text-right"><span t-field="line.quantity"/></td>
+                                    <td class="text-right"><span t-field="line.price_unit"/></td>
+                                    <td class="text-right"><span t-field="line.price_subtotal"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row mt-4">
+                            <div class="col-7">
+                                </div>
+                            <div class="col-5" style="border: 1px solid black; padding: 10px;">
+                                <div class="row">
+                                    <div class="col-8 text-right"><strong>Importe Neto Gravado: $</strong></div>
+                                    <div class="col-4 text-right"><span t-field="o.amount_untaxed"/></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8 text-right"><strong>IVA 21%: $</strong></div>
+                                    <div class="col-4 text-right"><span t-field="o.amount_tax"/></div>
+                                </div>
+                                <div class="row" style="font-size: 1.2em;">
+                                    <div class="col-8 text-right"><strong>Importe Total: $</strong></div>
+                                    <div class="col-4 text-right"><span t-field="o.amount_total"/></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-5">
+                            <div class="col-6">
+                                <img t-if="o.l10n_ar_afip_barcode" t-att-src="'/report/barcode/?type=Code128&amp;value=%s&amp;width=600&amp;height=100' % o.l10n_ar_afip_barcode" style="width:100%;height:50px;"/>
+                            </div>
+                            <div class="col-6 text-right">
+                                <strong>CAE N°:</strong> <span t-field="o.l10n_ar_afip_auth_code"/><br/>
+                                <strong>Fecha Vto CAE:</strong> <span t-field="o.l10n_ar_afip_auth_code_expiry"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,84 @@
+/* Contenedor principal para imitar el papel de la factura */
+.page {
+    font-family: Arial, sans-serif !important;
+    color: #000 !important;
+}
+
+/* Cuadro de la letra central (A, B o C) */
+.afip-letter-box {
+    border: 2px solid #000;
+    border-top: none; /* Según el diseño suele estar pegado al borde superior */
+    background-color: #fff;
+    min-height: 80px;
+    z-index: 10;
+}
+
+.afip-letter-box h1 {
+    font-size: 45px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1;
+}
+
+.afip-letter-box span {
+    font-size: 10px;
+    font-weight: bold;
+    display: block;
+}
+
+/* Estilo para las tablas de productos (idéntico a la imagen) */
+.table-afip {
+    border: 1px solid #000 !important;
+    border-collapse: collapse !important;
+}
+
+.table-afip thead th {
+    background-color: #e0e0e0 !important; /* Gris claro de la imagen */
+    border: 1px solid #000 !important;
+    text-transform: uppercase;
+    font-size: 11px;
+    padding: 4px !important;
+    color: #000 !important;
+}
+
+.table-afip tbody td {
+    border-right: 1px solid #000 !important;
+    border-left: 1px solid #000 !important;
+    padding: 2px 5px !important;
+    font-size: 11px;
+}
+
+/* Líneas divisorias fuertes */
+.afip-separator {
+    border-top: 2px solid #000 !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Secciones de totales */
+.totals-box {
+    border: 1px solid #000;
+    padding: 0;
+}
+
+.totals-box .row {
+    margin: 0;
+    border-bottom: 0.5px solid #ccc;
+}
+
+.total-label {
+    font-weight: bold;
+    text-align: right;
+    padding: 5px;
+}
+
+.total-amount {
+    text-align: right;
+    padding: 5px;
+}
+
+/* Estilo para el código de barras y CAE */
+.cae-section {
+    font-size: 12px;
+    font-weight: bold;
+}
