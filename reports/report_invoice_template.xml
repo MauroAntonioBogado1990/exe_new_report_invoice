@@ -5,108 +5,171 @@
                 .page {
                     font-family: Arial, sans-serif !important;
                     color: #000 !important;
-                    margin-top: 20px;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                }
+                .afip-original-title {
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    font-size: 14px;
+                    padding: 5px 0;
+                    border: 1px solid #000;
+                    border-bottom: none;
+                    margin-bottom: 0;
+                }
+                .main-container {
+                    border: 1px solid #000;
+                    padding: 10px;
+                    min-height: 900px; /* Asegura espacio para el pie de página */
                 }
                 .afip-letter-box {
-                    border: 2px solid #000;
+                    border: 1px solid #000;
                     border-top: none;
                     background-color: #fff;
-                    min-height: 80px;
+                    min-height: 90px;
+                    margin-top: -11px;
                 }
                 .afip-letter-box h1 {
-                    font-size: 45px;
+                    font-size: 40px;
                     font-weight: bold;
                     margin: 0;
-                    line-height: 1;
                 }
                 .table-afip {
                     border: 1px solid #000 !important;
-                    border-collapse: collapse !important;
                 }
                 .table-afip thead th {
                     background-color: #e0e0e0 !important;
                     border: 1px solid #000 !important;
-                    text-transform: uppercase;
-                    font-size: 11px;
+                    font-size: 10px;
+                    text-align: center;
+                }
+                .afip-footer {
+                    margin-top: 20px;
+                    border-top: 2px solid #000;
+                    padding-top: 10px;
                 }
             </style>
 
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.basic_layout">
-                    <div class="page" style="border: 1px solid black; padding: 10px; font-size: 12px;">
-                        
-                        <div class="row">
-                            <div class="col-5 text-center">
-                                <h2 t-field="o.company_id.name" style="font-weight: bold;"/>
-                                <p t-field="o.company_id.partner_id.contact_address"/>
-                            </div>
-                            
-                            <div class="col-2 text-center afip-letter-box">
-                                <h1>A</h1>
-                                <span style="font-size: 10px; font-weight: bold;">COD. 01</span>
-                            </div>
-
-                            <div class="col-5 text-left" style="padding-left: 20px;">
-                                <h2 style="font-weight: bold;">FACTURA</h2>
-                                <div><strong>Punto de Venta:</strong> <span t-field="o.journal_id.code"/></div>
-                                <div><strong>Comp. Nro:</strong> <span t-field="o.name"/></div>
-                                <div><strong>Fecha Emisión:</strong> <span t-field="o.invoice_date"/></div>
-                                <div><strong>CUIT:</strong> <span t-field="o.company_id.vat"/></div>
-                            </div>
+                    <div class="page">
+                        <div class="container-fluid afip-original-title text-center">
+                            ORIGINAL
                         </div>
 
-                        <hr style="border-top: 1px solid black;"/>
+                        <div class="container-fluid main-container">
+                            <div class="row">
+                                <div class="col-5 text-center">
+                                    <h2 t-field="o.company_id.name" style="font-weight: bold; margin-top: 10px;"/>
+                                    <p style="font-size: 10px;">
+                                        <strong>Razón Social:</strong> <span t-field="o.company_id.name"/><br/>
+                                        <strong>Domicilio Comercial:</strong> <span t-field="o.company_id.street"/>, <span t-field="o.company_id.city"/><br/>
+                                        <strong>Condición frente al IVA:</strong> <span t-field="o.company_id.l10n_ar_afip_responsibility_type_id.name"/>
+                                    </p>
+                                </div>
+                                
+                                <div class="col-2 text-center afip-letter-box">
+                                    <h1 t-esc="o.l10n_latam_document_type_id.l10n_ar_letter or 'A'"/>
+                                    <span style="font-size: 9px; font-weight: bold;">COD. <span t-esc="o.l10n_latam_document_type_id.code or '01'"/></span>
+                                </div>
 
-                        <div class="row">
-                            <div class="col-6">
-                                <strong>CUIT:</strong> <span t-field="o.partner_id.vat"/><br/>
-                                <strong>Condición frente al IVA:</strong> <span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id.name"/>
+                                <div class="col-5 text-left" style="padding-left: 20px;">
+                                    <h2 style="font-weight: bold;" t-field="o.l10n_latam_document_type_id.report_name">FACTURA</h2>
+                                    <div style="font-size: 11px;">
+                                        <strong>Punto de Venta:</strong> <span t-esc="o.journal_id.l10n_ar_afip_pos_number"/><br/>
+                                        <strong>Comp. Nro:</strong> <span t-esc="o.name.split('/')[-1]"/><br/>
+                                        <strong>Fecha Emisión:</strong> <span t-field="o.invoice_date"/><br/>
+                                        <strong>CUIT:</strong> <span t-field="o.company_id.vat"/><br/>
+                                        <strong>Ingresos Brutos:</strong> <span t-field="o.company_id.l10n_ar_gross_income_number"/><br/>
+                                        <strong>Inicio Actividades:</strong> <!--<span t-field="o.company_id.l10n_ar_data_start_date"/>-->
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <strong>Apellido y Nombre:</strong> <span t-field="o.partner_id.name"/><br/>
-                                <strong>Domicilio:</strong> <span t-field="o.partner_id.street"/>
+
+                            <hr style="border-top: 1px solid black; margin: 10px 0;"/>
+
+                            <div class="row" style="font-size: 10px;">
+                                <div class="col-6">
+                                    <strong>CUIT:</strong> <span t-field="o.partner_id.vat"/><br/>
+                                    <strong>Condición frente al IVA:</strong> <span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id.name"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Apellido y Nombre / Razón Social:</strong> <span t-field="o.partner_id.name"/><br/>
+                                    <strong>Domicilio Comercial:</strong> <span t-field="o.partner_id.street"/>
+                                </div>
                             </div>
-                        </div>
 
-                        <table class="table table-sm table-afip mt-4">
-                            <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Producto / Servicio</th>
-                                    <th class="text-right">Cantidad</th>
-                                    <th class="text-right">Precio Unit.</th>
-                                    <th class="text-right">Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr t-foreach="o.invoice_line_ids" t-as="line">
-                                    <td><span t-field="line.product_id.default_code"/></td>
-                                    <td><span t-field="line.name"/></td>
-                                    <td class="text-right"><span t-field="line.quantity"/></td>
-                                    <td class="text-right"><span t-field="line.price_unit"/></td>
-                                    <td class="text-right"><span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <table class="table table-sm table-afip mt-3" style="font-size: 10px;">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Producto / Servicio</th>
+                                        <th class="text-right">Cantidad</th>
+                                        <th class="text-center">U. Medida</th>
+                                        <th class="text-right">Precio Unit.</th>
+                                        <th class="text-right">% Bonif</th>
+                                        <th class="text-right">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                        <td><span t-field="line.product_id.default_code"/></td>
+                                        <td><span t-field="line.name"/></td>
+                                        <td class="text-right"><span t-field="line.quantity"/></td>
+                                        <td class="text-center"><span t-field="line.product_uom_id.name"/></td>
+                                        <td class="text-right"><span t-field="line.price_unit"/></td>
+                                        <td class="text-right"><span t-field="line.discount"/></td>
+                                        <td class="text-right"><span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                        <div class="row mt-4">
-                            <div class="col-7"></div>
-                            <div class="col-5" style="border: 1px solid black; padding: 10px;">
+                            <div class="row mt-3">
+                                <div class="col-7">
+                                    </div>
+                                <div class="col-5" style="border: 1px solid black; padding: 5px; font-size: 11px;">
+                                    <div class="row">
+                                        <div class="col-8 text-right"><strong>Importe Neto Gravado: $</strong></div>
+                                        <div class="col-4 text-right"><span t-field="o.amount_untaxed"/></div>
+                                    </div>
+                                    
+                                    <t t-foreach="o.tax_totals['groups_by_subtotal']['Importe libre de impuestos']" t-as="tax_group">
+                                        <div class="row">
+                                            <div class="col-8 text-right">
+                                                <strong t-esc="tax_group['tax_group_name']"/>: $
+                                            </div>
+                                            <div class="col-4 text-right">
+                                                <span t-esc="tax_group['formatted_tax_group_amount']"/>
+                                            </div>
+                                        </div>
+                                    </t>
+
+                                    <div class="row" style="font-size: 1.1em; border-top: 1px solid #ccc; margin-top: 5px; padding-top: 5px;">
+                                        <div class="col-8 text-right"><strong>Importe Total: $</strong></div>
+                                        <div class="col-4 text-right"><span t-field="o.amount_total"/></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="afip-footer">
                                 <div class="row">
-                                    <div class="col-8 text-right"><strong>Importe Neto Gravado: $</strong></div>
-                                    <div class="col-4 text-right"><span t-field="o.amount_untaxed"/></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-8 text-right"><strong>IVA 21%: $</strong></div>
-                                    <div class="col-4 text-right"><span t-field="o.amount_tax"/></div>
-                                </div>
-                                <div class="row" style="font-size: 1.2em;">
-                                    <div class="col-8 text-right"><strong>Importe Total: $</strong></div>
-                                    <div class="col-4 text-right"><span t-field="o.amount_total"/></div>
+                                    <div class="col-8">
+                                        <img src="/l10n_ar/static/src/img/afip_logo.png" style="height: 35px;" alt="Logo AFIP"/>
+                                        <div style="font-size: 8px; font-weight: bold; font-style: italic; margin-top: 5px;">
+                                            Esta Administración Federal no se responsabiliza por los datos ingresados en el detalle de la operación
+                                        </div>
+                                        <div class="mt-2 text-center" style="width: 100%;">
+                                            <!-- <img t-if="o.l10n_ar_afip_barcode" t-att-src="'/report/barcode/?type=Code128&amp;value=%s&amp;width=600&amp;height=100' % o.l10n_ar_afip_barcode" style="width: 400px; height: 50px;"/>
+                                            <p t-if="o.l10n_ar_afip_barcode" t-esc="o.l10n_ar_afip_barcode" style="font-size: 10px;"/> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-4 text-right" style="font-size: 12px; font-weight: bold;">
+                                        <!-- <div>CAE N°: <span t-field="o.l10n_ar_afip_auth_code"/></div>
+                                        <div>Fecha Vto. CAE: <span t-field="o.l10n_ar_afip_auth_code_expiry"/></div> -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> </div>
                 </t>
             </t>
         </t>
