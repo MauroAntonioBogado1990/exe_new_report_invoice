@@ -172,6 +172,21 @@
                                                     </div>
                                                 </div>
                                             </t>
+                                            <!--aqui pongo una alternativa -->
+                                                <!-- <t t-if="o.l10n_ar_afip_qr_code">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <img t-att-src="'/report/barcode/?barcode_type=QR&amp;value=%s&amp;width=150&amp;height=150' % quote_plus(o.l10n_ar_afip_qr_code)" 
+                                                                style="width: 100px; height: 100px; border: 1px solid #ccc;"/>
+                                                        </div>
+                                                        <div class="col-8" style="font-size: 10px; display: flex; align-items: center;">
+                                                            <p style="margin: 0;">Escanee este código para verificar la validez del comprobante.</p>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                                <t t-else="">
+                                                    <div style="font-size: 9px; color: red;">(QR no disponible: El comprobante no tiene datos de AFIP guardados)</div>
+                                                </t> -->
                                         </div>
                                     </div>
                                     <div class="col-4 text-right" style="font-size: 12px; font-weight: bold;">
