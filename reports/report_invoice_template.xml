@@ -151,7 +151,7 @@
                                 </div>
                             </div>
 
-                            <div class="afip-footer">
+                           <div class="afip-footer">
                                 <div class="row">
                                     <div class="col-8">
                                         <img src="/l10n_ar/static/src/img/afip_logo.png" style="height: 35px;" alt="Logo AFIP"/>
@@ -161,11 +161,28 @@
                                         <div class="mt-2 text-center" style="width: 100%;">
                                             <!-- <img t-if="o.l10n_ar_afip_barcode" t-att-src="'/report/barcode/?type=Code128&amp;value=%s&amp;width=600&amp;height=100' % o.l10n_ar_afip_barcode" style="width: 400px; height: 50px;"/>
                                             <p t-if="o.l10n_ar_afip_barcode" t-esc="o.l10n_ar_afip_barcode" style="font-size: 10px;"/> -->
+                                            <t t-if="o.l10n_ar_afip_qr_code">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=120&amp;height=120' % o.l10n_ar_afip_qr_code" 
+                                                             style="width: 100px; height: 100px;"/>
+                                                    </div>
+                                                    <div class="col-9" style="font-size: 9px; padding-top: 30px;">
+                                                        <p>Escanee este código para verificar la validez del comprobante.</p>
+                                                    </div>
+                                                </div>
+                                            </t>
                                         </div>
                                     </div>
                                     <div class="col-4 text-right" style="font-size: 12px; font-weight: bold;">
                                         <!-- <div>CAE N°: <span t-field="o.l10n_ar_afip_auth_code"/></div>
                                         <div>Fecha Vto. CAE: <span t-field="o.l10n_ar_afip_auth_code_expiry"/></div> -->
+                                        <t t-if="o.l10n_ar_afip_auth_code">
+                                            <div>CAE N°: <span t-esc="o.l10n_ar_afip_auth_code"/></div>
+                                            <div t-if="o.l10n_ar_afip_auth_code_due">
+                                                Fecha Vto. CAE: <span t-field="o.l10n_ar_afip_auth_code_due"/>
+                                            </div>
+                                        </t>
                                     </div>
                                 </div>
                             </div>
